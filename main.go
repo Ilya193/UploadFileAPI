@@ -46,6 +46,10 @@ func images(w http.ResponseWriter, r *http.Request) {
 
 	list := make([]string, len(files))
 
+	sort.Slice(files, func(i, j int) bool {
+		return files[j].ModTime().Before(files[i].ModTime())
+	})
+
 	for index, file := range files {
 		list[index] = "http://192.168.1.7:8080/upload-images/" + file.Name()
 	}
